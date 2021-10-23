@@ -7,23 +7,10 @@ const paper = document.querySelector('.paper');
 const scissor = document.querySelector('.scissor');
 const container = document.querySelector('.container');
 const playAgain = document.querySelector('.playAgain');
-let playerSelection = 'none'
+
 let gameOver = false
 let playerWin = 0;
 let compWin = 0;
-
-const computerPlay = () => {
-    const play = Math.floor(Math.random()*3);
-    if (play == 0) {
-        return 'rock'
-    }
-    else if (play == 1) {
-        return 'paper'
-    }
-    else {
-        return 'scissor'
-    }
-}
 
 const isGameOver = () => {
     if(gameOver) {
@@ -39,7 +26,6 @@ const isGameOver = () => {
 }
 
 const playerWon = (player, computer) => {
-    playerSelection = 'none';
     playerWin++;
     pScore.textContent = playerWin;
     if (playerWin == 5) {
@@ -50,7 +36,6 @@ const playerWon = (player, computer) => {
 }
 
 const playerLost = (player, computer) => {
-    playerSelection = 'none';
     compWin++
     cScore.textContent = compWin;
     if (compWin == 5) {
@@ -60,57 +45,45 @@ const playerLost = (player, computer) => {
     }
 }
 
+const playerTie = (player, computer) => {
+    results.textContent = `Tie! Both players chose ${player}.`
+}
+
 const playRound = (player, computer) => {
-    if (player == computer) {
-        playerSelection = 'none'
-        results.textContent = `You tie! Both players pick ${computer}!`
+    let computerPlay = Math.floor(Math.random()*3);
+    if (computerPlay == 0) {
+        playerWon(player, computer[computerPlay])
+    } else if (computerPlay == 1) {
+        playerLost(player, computer[computerPlay])
     } else {
-        if (player == 'rock') {
-            if (computer == 'paper') {
-                return playerLost(player, computer)
-            } else {
-                return playerWon(player,computer)
-            };
-        } else if (player == 'paper') {
-            if (computer == 'rock') {
-                return playerWon(player,computer)
-            } else {
-                return playerLost(player, computer)
-            }
-        } else {
-            if (computer == 'rock') {
-                return playerLost(player, computer)
-            } else {
-                return playerWon(player,computer)
-            };
-        };
+        playerTie(player, computer[computerPlay])
     }
 }
 
 rock.addEventListener('click', () => {
-    playerSelection = 'rock';
-    playRound(playerSelection, computerPlay());
+    playRound('rock', ['scissor', 'paper', 'rock']);
     isGameOver();
 });
 paper.addEventListener('click', () => {
-    playerSelection = 'paper';
-    playRound(playerSelection, computerPlay());
+    playRound('paper', ['rock', 'scissor', 'paper']);
     isGameOver();
 });
 scissor.addEventListener('click', () => {
-    playerSelection = 'scissor';
-    playRound(playerSelection, computerPlay());
+    playRound('scissor', ['paper', 'rock', 'scissor']);
     isGameOver();
 });
+
 playAgain.addEventListener('click', () => {
-    playerSelection = 'none'
-    playerWin = 0;
-    compWin = 0;
-    results.textContent = 'Welcome to the game!';
     rock.removeAttribute('disabled');
     paper.removeAttribute('disabled');
     scissor.removeAttribute('disabled');
+    
+    results.textContent = 'Welcome to the game!';
+    
+    playerWin = 0;
+    compWin = 0;
     pScore.textContent = playerWin;
     cScore.textContent = compWin;
+    
     gameOver = false;
 })
