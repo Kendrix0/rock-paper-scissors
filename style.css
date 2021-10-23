@@ -1,0 +1,60 @@
+body {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    height: 100vh;
+    align-items: center;
+    background-color: gray;
+}
+
+h1 {
+    font-size: 128px;
+    margin: 0px;
+    padding: 0px;
+    font-weight: bolder;
+}
+
+
+.scores {
+    font-size: 96px;
+    font-weight: bold;
+}
+
+.results {
+    font-size: 64px;
+}
+
+.choices {
+    display: flex;
+    justify-content: space-between;
+    gap: 15em;
+}
+
+.choice {
+    width: 200px;
+    height: 200px;
+    background: inherit;
+    border: none;
+}
+
+.choice:hover {
+    transform: translateY(-0.5em);
+}
+
+.playAgain {
+    background:inherit;
+    border: 10px solid black;
+    border-radius: 50px;
+    width: 500px;
+    height: 200px;
+    font-size: 64px;
+}
+
+img {
+    width: 190px;
+    height: 190px;
+}
+
+button:hover {
+    cursor: pointer;
+}
