@@ -8,14 +8,14 @@ const scissor = document.querySelector('.scissor');
 const container = document.querySelector('.container');
 const playAgain = document.querySelector('.playAgain');
 
-let gameOver = false
+let gameOver = false;
 let playerWin = 0;
 let compWin = 0;
 
 const isGameOver = () => {
     if(gameOver) {
         if (playerWin > compWin) {
-            results.textContent = 'Game over! You win!';
+            results.textContent = 'Congratulations! You win!';
         } else if (playerWin < compWin) {
             results.textContent = 'Game over! You lose!';
         }
@@ -25,38 +25,20 @@ const isGameOver = () => {
     }
 }
 
-const playerWon = (player, computer) => {
-    playerWin++;
-    pScore.textContent = playerWin;
-    if (playerWin == 5) {
-        gameOver = true
+const playRound = (playerMove, computerMove) => {
+    let roundResult = Math.floor(Math.random() * 3);
+    if (roundResult === 0) {
+        playerWin++;
+        gameOver = (playerWin === 5);
+        pScore.textContent = playerWin;
+        results.textContent = `You win, ${playerMove} beats ${computerMove[roundResult]}!`;
+    } else if (roundResult === 1) {
+        compWin++;
+        gameOver = (compWin === 5);
+        cScore.textContent = compWin;
+        results.textContent = `You lose, ${computerMove[roundResult]} beats ${playerMove}!`;
     } else {
-        results.textContent = `You win, ${player} beats ${computer}!`;
-    }
-}
-
-const playerLost = (player, computer) => {
-    compWin++
-    cScore.textContent = compWin;
-    if (compWin == 5) {
-        gameOver = true
-    } else {
-        results.textContent = `You lose, ${computer} beats ${player}!`;
-    }
-}
-
-const playerTie = (player, computer) => {
-    results.textContent = `Tie! Both players chose ${player}.`
-}
-
-const playRound = (player, computer) => {
-    let computerPlay = Math.floor(Math.random()*3);
-    if (computerPlay == 0) {
-        playerWon(player, computer[computerPlay])
-    } else if (computerPlay == 1) {
-        playerLost(player, computer[computerPlay])
-    } else {
-        playerTie(player, computer[computerPlay])
+        results.textContent = `Tie! Both players chose ${playerMove}.`
     }
 }
 
